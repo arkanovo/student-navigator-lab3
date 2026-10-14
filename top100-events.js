@@ -15,7 +15,14 @@
   }
   document.addEventListener("click", event => {
     const link = event.target.closest("[data-top100-event]");
-    if (link) emit(link.dataset.top100Event, { target_path: link.getAttribute("href") });
+    if (!link) return;
+    emit(link.dataset.top100Event, { target_path: link.getAttribute("href") });
+    // Даём запросу аналитики начать отправку до выгрузки текущей страницы.
+    if (window.TOP100_PROJECT_ID && event.button === 0 && !event.ctrlKey &&
+        !event.metaKey && !event.shiftKey && !event.altKey && !event.defaultPrevented) {
+      event.preventDefault();
+      setTimeout(() => location.assign(link.getAttribute("href")), 250);
+    }
   });
   const checklist = document.querySelector(".checklist");
   if (!checklist) return;
