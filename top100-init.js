@@ -7,6 +7,7 @@
       window.top100Counter = new top100({
         project: String(project),
         element: "top100-widget",
+        widgetColor: "0062b1",
         attributes_dataset: ["top100-block"],
         trackHashes: true
       });
